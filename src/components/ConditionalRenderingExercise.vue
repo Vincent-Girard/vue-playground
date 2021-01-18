@@ -10,7 +10,7 @@
             screen.
           </p>
           <!-- add code to element below -->
-          <div class="player-card text-center">
+          <div class="player-card text-center" v-if="state.player.showPlayer">
             <div>
               <img :src="state.player.photo" />
             </div>
@@ -68,22 +68,22 @@
           </p>
           <!-- v-if comparing grade and 90 -->
           <div>
-            <p>The grade is 'A'.</p>
+            <p v-if="state.player.grade >= 90">The grade is 'A'.</p>
           </div>
           <!-- v-else-if comparing grade and 80 -->
           <div>
-            <p>The grade is 'B'.</p>
+            <p v-if="state.player.grade >=70 && state.player.grade < 90 ">The grade is 'B'.</p>
           </div>
           <!-- v-else-if comparing grade and 70 -->
-          <div>
+          <div v-if=" state.player.grade>=70 && state.player.grade < 80 ">
             <p>The grade is 'C'.</p>
           </div>
           <!-- v-else-if comparing grade and 60 -->
-          <div>
+          <div v-if="state.player.grade >=60 && state.player.grade < 70 ">
             <p>The grade is 'D'.</p>
           </div>
           <!-- v-else to display if all the others fail -->
-          <div>
+          <div v-if="state.player.grade < 60 ">
             <p>The grade is 'F'.</p>
           </div>
         </div>
@@ -106,6 +106,9 @@
             <div>
               <span>{{ state.player.number }}</span>
             </div>
+            <div>
+              <span>{{ state.player.grade }}</span>
+            </div>
           </div>
           <p>
             As soon as the directive is changed to v-show, this element was
@@ -122,38 +125,40 @@
 
 
 <script>
-import { reactive } from "vue";
+  import { reactive } from "vue";
 
-export default {
-  name: "condtional-rendering-exercise",
-  setup() {
-    const state = reactive({
-      //add a property to toggle the player-card here.
-      //add a property to set the number value here.
-      player: {
-        photo: "https://robohash.org/D$",
-        name: "D$",
-        position: "WR",
-        number: 4,
-      },
-    });
-    return {
-      state,
-    };
-  },
-};
+  export default {
+    name: "condtional-rendering-exercise",
+    setup() {
+      const state = reactive({
+        //add a property to toggle the player-card here.
+        //add a property to set the number value here.
+        player: {
+          photo: "https://robohash.org/D$",
+          name: "D$",
+          position: "WR",
+          number: 4,
+          showPlayer: true,
+          grade: 70,
+        },
+      });
+      return {
+        state,
+      };
+    },
+  };
 </script>
 
 
 <style scoped>
-.player-card {
-  border: 1px solid rgba(154, 154, 156, 0.4);
-  background-color: rgba(154, 154, 156, 0.4);
-  margin: 1rem;
-  border-radius: 5px;
-}
+  .player-card {
+    border: 1px solid rgba(154, 154, 156, 0.4);
+    background-color: rgba(154, 154, 156, 0.4);
+    margin: 1rem;
+    border-radius: 5px;
+  }
 
-.img {
-  height: 10rem;
-}
+  .img {
+    height: 10rem;
+  }
 </style>
